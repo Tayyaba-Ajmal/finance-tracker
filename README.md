@@ -1,5 +1,4 @@
-CashTrack — Personal Finance Tracker
-
+## CashTrack — Personal Finance Tracker
 A modern, responsive personal finance dashboard built with **HTML5**, **CSS3**, and **Vanilla JavaScript (ES6 Modules)**. Track your income and expenses, visualize financial insights, manage categories, and monitor your spending through a clean and interactive interface—all without any frameworks or backend.
 
 ---
