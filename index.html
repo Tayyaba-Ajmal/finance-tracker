@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CashTrack — Finance Dashboard</title>
+    <meta
+      name="description"
+      content="A modern, privacy-first personal finance tracker. Track income and expenses, browse interactive analytics, and export your data — all stored locally in your browser."
+    />
+
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+  <body>
+    <!-- ============================== LOADING SCREEN ============================== -->
+    <!-- <div class="loading-screen" id="loadingScreen" aria-hidden="true">
+      <div class="loading-mark">C</div>
+      <p>Loading your dashboard…</p>
+    </div> -->
+
+    <!-- ================================= APP SHELL ================================= -->
+    <div class="app-shell" id="appShell" data-sidebar="expanded">
+      <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+      <!-- --------------------------------- Sidebar --------------------------------- -->
+      <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
+        <div class="sidebar-brand">
+          <div class="brand-mark">C</div>
+          <span class="brand-name">CashTrack</span>
+        </div>
+
+        <nav class="sidebar-nav">
+          <span class="nav-section-label">Menu</span>
+          <button class="nav-item is-active" data-page="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="7" height="9" rx="1.5" />
+              <rect x="14" y="3" width="7" height="5" rx="1.5" />
+              <rect x="14" y="12" width="7" height="9" rx="1.5" />
+              <rect x="3" y="16" width="7" height="5" rx="1.5" />
+            </svg>
+            <span class="nav-label">Dashboard</span>
+          </button>
+          <button class="nav-item" data-page="transactions">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 7h13l-3-3M20 17H7l3 3" />
+            </svg>
+            <span class="nav-label">Transactions</span>
+          </button>
+          <button class="nav-item" data-page="categories">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="7" cy="7" r="3" />
+              <circle cx="17" cy="7" r="3" />
+              <circle cx="7" cy="17" r="3" />
+              <circle cx="17" cy="17" r="3" />
+            </svg>
+            <span class="nav-label">Categories</span>
+          </button>
+          <button class="nav-item" data-page="reports">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 20V10M11 20V4M18 20v-7" />
+            </svg>
+            <span class="nav-label">Reports</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="user-chip">
+            <div class="avatar">Y</div>
+            <span
+              class="sidebar-footer-text"
+              style="font-size: var(--fs-sm); font-weight: 500"
+              >You</span
+            >
+          </div>
+          <button
+            class="btn-icon"
+            id="sidebarToggle"
+            aria-label="Collapse sidebar"
+            title="Collapse sidebar"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+
+      <!-- ------------------------------- Main column -------------------------------- -->
+      <div class="app-main">
+        <header class="topbar">
+          <button
+            class="btn-icon hamburger"
+            id="hamburgerBtn"
+            aria-label="Toggle navigation menu"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <div class="topbar-search">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="M21 21l-4.3-4.3" />
+            </svg>
+            <input
+              type="search"
+              id="searchInput"
+              placeholder="Search transactions…"
+              aria-label="Search transactions"
+            />
+          </div>
+
+          <div class="topbar-actions">
+            <button
+              class="btn-icon"
+              id="mobileSearchToggle"
+              aria-label="Toggle search"
+              style="display: none"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="M21 21l-4.3-4.3" />
+              </svg>
+            </button>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle dark and light mode"
+              title="Toggle theme"
+            >
+              <span class="knob">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="10"
+                  height="10"
+                  fill="none"
+                  stroke="#04140d"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                >
+                  <circle cx="12" cy="12" r="4" />
+                </svg>
+              </span>
+            </button>
+            <button class="btn btn-primary" id="addTxnBtn">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              <span>Add Transaction</span>
+            </button>
+          </div>
+        </header>
+
+        <main class="main-content">
+          <!-- =============================== DASHBOARD PAGE =============================== -->
+          <section
+            class="page is-active"
+            id="page-dashboard"
+            data-page="dashboard"
+          >
+            <div class="page-header">
+              <div>
+                <h1>Dashboard</h1>
+                <p>Your complete financial picture, updated in real time.</p>
+              </div>
+              <div class="topbar-actions">
+                <button class="btn btn-secondary" id="exportCsvBtn">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 3v12" />
+                    <path d="M7 10l5 5 5-5" />
+                    <path d="M5 21h14" />
+                  </svg>
+                  CSV
+                </button>
+                <button class="btn btn-secondary" id="exportPdfBtn">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 3v12" />
+                    <path d="M7 10l5 5 5-5" />
+                    <path d="M5 21h14" />
+                  </svg>
+                  PDF
+                </button>
+              </div>
+            </div>
+
+            <!-- Skeletons -->
+            <div class="stat-grid" data-skeleton>
+              <div class="skeleton skeleton-card"></div>
+              <div class="skeleton skeleton-card"></div>
+              <div class="skeleton skeleton-card"></div>
+              <div class="skeleton skeleton-card"></div>
+              <div class="skeleton skeleton-card"></div>
+            </div>
+
+            <!-- Real stat cards -->
+            <div class="stat-grid reveal" data-real style="display: none">
+              <div class="card stat-card balance-card">
+                <div class="balance-top">
+                  <div class="stat-icon tone-mint">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M21 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h17a1 1 0 0 0 1-1v-4"
+                      />
+                      <path d="M2 9V6a2 2 0 0 1 2-2h13" />
+                      <circle cx="17" cy="13" r="1.5" />
+                    </svg>
+                  </div>
+                  <span class="stat-delta" id="statBalanceDelta"></span>
+                </div>
+                <span class="stat-label">Total Balance</span>
+                <span class="stat-value" id="statBalance">$0.00</span>
+                <svg class="balance-sparkline" id="balanceSparkline"></svg>
+              </div>
+
+              <div class="card stat-card">
+                <div class="stat-icon tone-mint">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M3 17l6-6 4 4 8-8" />
+                    <path d="M15 7h6v6" />
+                  </svg>
+                </div>
+                <span class="stat-label">Total Income</span>
+                <span class="stat-value" id="statIncome">$0.00</span>
+              </div>
+
+              <div class="card stat-card">
+                <div class="stat-icon tone-coral">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M3 7l6 6 4-4 8 8" />
+                    <path d="M15 17h6v-6" />
+                  </svg>
+                </div>
+                <span class="stat-label">Total Expenses</span>
+                <span class="stat-value" id="statExpense">$0.00</span>
+              </div>
+
+              <div class="card stat-card">
+                <div class="stat-icon tone-indigo">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M19 9V6a1 1 0 0 0-1-1h-1a3 3 0 0 0-3-2c-1.5 0-2.7 1-3 2.2-3.4.4-6 3-6 6.3v1c-1 .3-2 1.2-2 2.5s1 2.2 2 2.5v1.5a2 2 0 0 0 2 2h2v-2h3v2h3v-2c1.7-.5 3-2 3-3.9V11h1a1 1 0 0 0 1-1V9Z"
+                    />
+                  </svg>
+                </div>
+                <span class="stat-label">Savings Rate</span>
+                <span class="stat-value" id="statSavings">0%</span>
+              </div>
+            </div>
+
+            <!-- Charts -->
+            <div
+              class="empty-state card"
+              id="chartsEmptyState"
+              style="display: none"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="7" width="18" height="13" rx="2" />
+                <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                <path d="M3 12h18" />
+              </svg>
+              <h3>No data to chart yet</h3>
+              <p>
+                Add a few transactions and your income vs. expense breakdown
+                will appear here.
+              </p>
+              <button class="btn btn-primary" id="addTxnBtnEmpty">
+                Add your first transaction
+              </button>
+            </div>
+
+            <div
+              class="chart-grid reveal"
+              id="chartsGrid"
+              style="display: none"
+            >
+              <div class="card">
+                <div class="section-header">
+                  <h2>Income vs. Expenses Trend</h2>
+                </div>
+                <div class="chart-box">
+                  <canvas id="monthlyTrendChart"></canvas>
+                </div>
+              </div>
+              <div class="card">
+                <div class="section-header"><h2>Income vs. Expenses</h2></div>
+                <div class="chart-box">
+                  <canvas id="incomeExpenseChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent transactions -->
+            <div class="card reveal">
+              <div class="section-header">
+                <h2>Recent Transactions</h2>
+                <button
+                  class="btn btn-ghost btn-sm"
+                  data-page="transactions"
+                  onclick="
+                    document.querySelector('[data-page=transactions]').click()
+                  "
+                >
+                  View all
+                </button>
+              </div>
+
+              <div
+                class="empty-state"
+                id="recentEmptyState"
+                style="display: none"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="7" width="18" height="13" rx="2" />
+                  <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  <path d="M3 12h18" />
+                </svg>
+                <h3>No transactions yet</h3>
+                <p>
+                  Track your first income or expense to see it show up here.
+                </p>
+                <button class="btn btn-primary" id="addTxnBtnRecentEmpty">
+                  Add transaction
+                </button>
+              </div>
+
+              <div
+                class="table-wrap"
+                id="recentTableWrap"
+                style="margin-top: var(--space-3)"
+              >
+                <table class="txn-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th>Type</th>
+                      <th>Amount</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentTxnBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============================= TRANSACTIONS PAGE ============================== -->
+          <section class="page" id="page-transactions" data-page="transactions">
+            <div class="page-header">
+              <div>
+                <h1>Transactions</h1>
+                <p id="txnCount">0 transactions</p>
+              </div>
+              <button
+                class="btn btn-primary"
+                onclick="document.getElementById('addTxnBtn').click()"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                Add Transaction
+              </button>
+            </div>
+
+            <div class="card">
+              <div class="filter-bar">
+                <select id="filterType" aria-label="Filter by type">
+                  <option value="all">All types</option>
+                  <option value="income">Income</option>
+                  <option value="expense">Expense</option>
+                </select>
+                <select
+                  id="filterCategory"
+                  aria-label="Filter by category"
+                ></select>
+                <label class="sr-only" for="filterDateFrom">From date</label>
+                <input type="date" id="filterDateFrom" aria-label="From date" />
+                <label class="sr-only" for="filterDateTo">To date</label>
+                <input type="date" id="filterDateTo" aria-label="To date" />
+                <button class="btn btn-ghost btn-sm" id="clearFiltersBtn">
+                  Clear filters
+                </button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="empty-state" id="txnEmptyState" style="display: none">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="7" width="18" height="13" rx="2" />
+                  <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  <path d="M3 12h18" />
+                </svg>
+                <h3>No matching transactions</h3>
+                <p>
+                  Try adjusting your search or filters, or add a new
+                  transaction.
+                </p>
+              </div>
+
+              <div class="table-wrap" id="txnTableWrap">
+                <table class="txn-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th>Type</th>
+                      <th>Amount</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="txnTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============================== CATEGORIES PAGE =============================== -->
+          <section class="page" id="page-categories" data-page="categories">
+            <div class="page-header">
+              <div>
+                <h1>Categories</h1>
+                <p>
+                  Organize income and expenses the way that makes sense to you.
+                </p>
+              </div>
+              <button class="btn btn-primary" id="addCategoryBtn">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                New Category
+              </button>
+            </div>
+
+            <div class="card">
+              <div class="category-grid" id="categoryChips"></div>
+            </div>
+          </section>
+
+          <!-- ================================ REPORTS PAGE ================================= -->
+          <section class="page" id="page-reports" data-page="reports">
+            <div class="page-header">
+              <div>
+                <h1>Monthly Reports</h1>
+                <p>Income, expenses, and net flow over the last six months.</p>
+              </div>
+            </div>
+
+            <div
+              class="empty-state card"
+              id="reportChartsEmpty"
+              style="display: none"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="7" width="18" height="13" rx="2" />
+                <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                <path d="M3 12h18" />
+              </svg>
+              <h3>Nothing to report yet</h3>
+              <p>
+                Once you've logged some transactions, your monthly breakdown
+                appears here.
+              </p>
+            </div>
+
+            <div class="chart-grid" id="reportChartsGrid" style="display: none">
+              <div class="card">
+                <div class="section-header"><h2>6-Month Trend</h2></div>
+                <div class="chart-box">
+                  <canvas id="reportTrendChart"></canvas>
+                </div>
+              </div>
+              <div class="card">
+                <div class="section-header">
+                  <h2>Top Spending Categories</h2>
+                </div>
+                <div class="chart-box">
+                  <canvas id="reportCategoryChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div
+                class="empty-state"
+                id="reportEmptyState"
+                style="display: none"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="7" width="18" height="13" rx="2" />
+                  <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  <path d="M3 12h18" />
+                </svg>
+                <h3>No monthly data</h3>
+                <p>
+                  Your month-by-month summary table will populate as you add
+                  transactions.
+                </p>
+              </div>
+              <div class="table-wrap" id="reportTableWrap">
+                <table class="txn-table">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Income</th>
+                      <th>Expenses</th>
+                      <th>Net</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reportTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- ============================== ADD/EDIT TRANSACTION MODAL ============================== -->
+    <div
+      class="modal-overlay"
+      id="txnModal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="txnModalTitle"
+    >
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="txnModalTitle">Add Transaction</h3>
+          <button class="btn-icon" data-close aria-label="Close dialog">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <form id="txnForm" novalidate>
+          <div class="modal-body">
+            <div class="type-toggle">
+              <input
+                type="radio"
+                name="txnType"
+                id="type-income"
+                value="income"
+              />
+              <label for="type-income">Income</label>
+              <input
+                type="radio"
+                name="txnType"
+                id="type-expense"
+                value="expense"
+                checked
+              />
+              <label for="type-expense">Expense</label>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field span-2">
+                <label for="txnAmount">Amount</label>
+                <input
+                  type="number"
+                  id="txnAmount"
+                  min="0.01"
+                  step="0.01"
+                  placeholder="0.00"
+                  data-autofocus
+                  required
+                />
+                <span class="field-error" id="txnAmountError"></span>
+              </div>
+
+              <div class="form-field span-2">
+                <label for="txnDescription">Description</label>
+                <input
+                  type="text"
+                  id="txnDescription"
+                  placeholder="e.g. Grocery run at Whole Foods"
+                  maxlength="120"
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="txnCategory">Category</label>
+                <select id="txnCategory" required></select>
+                <span class="field-error" id="txnCategoryError"></span>
+              </div>
+
+              <div class="form-field">
+                <label for="txnDate">Date</label>
+                <input type="date" id="txnDate" required />
+                <span class="field-error" id="txnDateError"></span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-ghost" data-close>
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary" id="txnSubmitBtn">
+              Add Transaction
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================================== ADD CATEGORY MODAL =================================== -->
+    <div
+      class="modal-overlay"
+      id="catModal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="catModalTitle"
+    >
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="catModalTitle">New Category</h3>
+          <button class="btn-icon" data-close aria-label="Close dialog">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <form id="catForm" novalidate>
+          <div class="modal-body">
+            <div class="form-field">
+              <label for="catName">Name</label>
+              <input
+                type="text"
+                id="catName"
+                placeholder="e.g. Subscriptions"
+                maxlength="30"
+                data-autofocus
+                required
+              />
+              <span class="field-error" id="catNameError"></span>
+            </div>
+            <div class="form-field">
+              <label for="catType">Applies to</label>
+              <select id="catType">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+                <option value="both">Both</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Color</label>
+              <div class="swatch-picker" id="swatchPicker"></div>
+              <input type="hidden" id="catColor" value="#34d399" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-ghost" data-close>
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Create Category
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================================== CONFIRMATION MODAL =================================== -->
+    <div
+      class="modal-overlay"
+      id="confirmModal"
+      aria-hidden="true"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="confirmTitle"
+    >
+      <div class="modal" style="max-width: 380px">
+        <div class="modal-header">
+          <h3 id="confirmTitle">Are you sure?</h3>
+          <button class="btn-icon" data-close aria-label="Close dialog">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="confirm-text" id="confirmMessage">
+            This action cannot be undone.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirmActionBtn">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================================== TOAST STACK ==================================== -->
+    <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+    <!-- Chart.js — self-hosted in /vendor, exposes the global `Chart` used by js/modules/charts.js -->
+    <script src="vendor/js/chart.umd.min.js"></script>
+    <!-- jsPDF + autotable — self-hosted in /vendor, exposes window.jspdf.jsPDF used by js/modules/exportData.js -->
+    <script src="vendor/js/jspdf.umd.min.js"></script>
+    <script src="vendor/js/jspdf.plugin.autotable.min.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   ========================================================================== */
+
+:root {
+  /* ---- Brand / semantic colors ---- */
+  --accent-mint: #34d399;
+  --accent-mint-dim: #16a37a;
+  --accent-coral: #f87171;
+  --accent-coral-dim: #dc5a5a;
+  --accent-indigo: #818cf8;
+  --accent-amber: #fbbf24;
+
+  /* ---- Dark theme (default) ---- */
+  --bg-primary: #0b0e14;
+  --bg-secondary: #11141c;
+  --bg-elevated: #171b26;
+  --bg-elevated-hover: #1d2230;
+  --bg-glass: rgba(23, 27, 38, 0.72);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-strong: rgba(255, 255, 255, 0.14);
+  --text-primary: #edeff3;
+  --text-secondary: #9ba3b4;
+  --text-tertiary: #666f82;
+  --shadow-color: 220 40% 2%;
+  --scrollbar-track: #11141c;
+  --scrollbar-thumb: #2a2f3d;
+
+  /* ---- Typography ---- */
+  --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.9375rem;
+  --fs-md: 1.0625rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 1.875rem;
+  --fs-3xl: 2.5rem;
+
+  /* ---- Spacing scale ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ---- Radii ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 999px;
+
+  /* ---- Elevation ---- */
+  --shadow-sm: 0 2px 8px hsl(var(--shadow-color) / 0.35);
+  --shadow-md: 0 8px 24px hsl(var(--shadow-color) / 0.45);
+  --shadow-lg: 0 16px 48px hsl(var(--shadow-color) / 0.55);
+  --shadow-glow-mint: 0 0 32px rgba(52, 211, 153, 0.18);
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 450ms;
+
+  /* ---- Layout ---- */
+  --sidebar-width: 248px;
+  --sidebar-width-collapsed: 76px;
+  --topbar-height: 72px;
+  --content-max: 1440px;
+}
+
+/* ---- Light theme overrides ---- */
+:root[data-theme='light'] {
+  --bg-primary: #f5f6f9;
+  --bg-secondary: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-elevated-hover: #f0f1f5;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --border-color: rgba(15, 17, 21, 0.08);
+  --border-color-strong: rgba(15, 17, 21, 0.14);
+  --text-primary: #12151c;
+  --text-secondary: #5c6470;
+  --text-tertiary: #8991a1;
+  --shadow-color: 220 30% 60%;
+  --scrollbar-track: #eceef2;
+  --scrollbar-thumb: #cbd0da;
+  --accent-mint-dim: #0f9d72;
+}
