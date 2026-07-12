@@ -13,7 +13,7 @@ A modern, responsive personal finance dashboard built with **HTML5**, **CSS3**, 
 - Interactive charts and analytics
 - 7-day balance trend visualization
 - Local data storage using `localStorage`
-- Export transactions as CSV or JSON
+- Export transactions as CSV or PDF
 - Dark and Light mode with saved preferences
 - Fully responsive design
 - Smooth animations and loading states
@@ -110,7 +110,7 @@ Optimized for:
 - Transaction management
 - Category management
 - Search and filtering
-- CSV & JSON export
+- CSV & PDF export
 - Dark/Light mode
 - Offline data persistence
 - Modern UI with smooth animations
